@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.   *
  * ********************************************************************** */
 
+#ifndef QFACEBOOK_H
+#define QFACEBOOK_H
+
 #include <QObject>
 #include <QStringList>
 #include <QtGui/QGuiApplication>
@@ -40,8 +43,8 @@ int qFacebook_registerJavaNativeMethods(JavaVM*, void*);
  */
 class QFacebook : public QObject {
 	Q_OBJECT
-	Q_ENUMS( FacebookState )
-	/*! Facebook application ID */
+
+    /*! Facebook application ID */
 	Q_PROPERTY( QString appID READ getAppID WRITE setAppID NOTIFY appIDChanged )
 	/*! Facebook application display name (used only on iOS platform) */
 	Q_PROPERTY( QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged )
@@ -87,6 +90,7 @@ public:
 		 *  but the users token remains cached on the device for later use */
 		SessionClosed = 6
 	};
+    Q_ENUM( FacebookState )
 public slots:
 	/*! perform a login into facebook
 	 *  During the login to Facebook only the read permissions (which that doesn't allow
@@ -225,3 +229,5 @@ private:
 	void initPlatformData();
 	friend class QFacebookPlatformData;
 };
+
+#endif //QFACEBOOK_H
