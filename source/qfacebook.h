@@ -26,6 +26,7 @@
 #include <QtQml>
 #include <QUrl>
 #include <QPixmap>
+#include <QtGlobal>
 
 class QFacebookPlatformData;
 class QQuickItemGrabResult;
@@ -43,6 +44,10 @@ int qFacebook_registerJavaNativeMethods(JavaVM*, void*);
  */
 class QFacebook : public QObject {
 	Q_OBJECT
+
+#if QT_VERSION >= 0x050000 && QT_VERSION < 0x050500
+    Q_ENUMS( FacebookState )
+#endif
 
     /*! Facebook application ID */
 	Q_PROPERTY( QString appID READ getAppID WRITE setAppID NOTIFY appIDChanged )
@@ -90,7 +95,11 @@ public:
 		 *  but the users token remains cached on the device for later use */
 		SessionClosed = 6
 	};
+
+#if QT_VERSION >= 0x050500
     Q_ENUM( FacebookState )
+#endif
+
 public slots:
 	/*! perform a login into facebook
 	 *  During the login to Facebook only the read permissions (which that doesn't allow
